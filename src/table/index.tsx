@@ -4,6 +4,8 @@ import { Page } from "../services/customers/customers-service.types";
 import Customer from "../entities/customer";
 import { CustomerService } from "../services/customers/customers.service";
 import CustomersTable from "./components/Table";
+import FloatButton from "../components/FloatButton";
+import UploadDrawer from "./components/UploadDrawer";
 
 
 export default function CustomerTable() {
@@ -12,6 +14,7 @@ export default function CustomerTable() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeFilter, setActiveFilter] = useState<string>("distribuidoras");
   const [activeYear, setActiveYear] = useState<string>("2024");
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const pageSize: number = 10;
 
   useEffect(() => {
@@ -26,38 +29,6 @@ export default function CustomerTable() {
 
     fetchCustomers();
   }, [currentPage, activeYear]);
-
-  const sampleData: Page<Customer> = {
-    content: [
-      {
-        id: 2,
-        registrationNumber: "7202210726",
-        distributor: "CEMIG",
-        name: "CASA DONA COMERCIO VAREJISTA E SOLUC...",
-        consumer: "CASA DONA COMERCIO VAR...",
-        invoices: [
-          {
-            id: 12,
-            referenceMonth: "JAN",
-            referenceYear: "2024",
-            electricityConsumptionKWh: "100",
-            electricityCost: "95.52",
-            sceeeEnergyWithICMSKWh: "2.3",
-            sceeeEnergyWithICMSCost: "1.172",
-            compensatedEnergyKWh: "2.3",
-            compensatedEnergyCost: "-1.12",
-            publicLightingContributionKWh: "40.45"
-          }
-        ]
-      }
-    ],
-    page: "1",
-    pageSize: "10",
-    totalElements: 1,
-    totalPages: 1,
-    hasNext: false,
-    hasPrevious: false
-  };
 
   if (isLoading) return <p>Carregando...</p>;
 
@@ -77,6 +48,17 @@ export default function CustomerTable() {
         activeYear={activeYear}
         setActiveYear={setActiveYear}
         setCurrentPage={setCurrentPage}
+      />
+
+      <UploadDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      />
+
+      <FloatButton
+        onClick={() => setIsDrawerOpen(true)}
+        icon={<span>+</span>}
+        ariaLabel="Enviar nova fatura"
       />
     </>
   );
