@@ -7,6 +7,7 @@ export const CustomerService = {
     const response = await axios.get<{ data: Page<Customer> }>(`http://localhost:3000/customers`, {
       params: request
     });
+    
     return response.data;
   }
   
