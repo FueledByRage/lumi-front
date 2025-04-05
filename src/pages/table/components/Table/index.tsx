@@ -1,12 +1,12 @@
-import Customer from "../../../entities/customer";
-import Invoice from "../../../entities/Invoice";
-import { Page } from "../../../services/customers/customers-service.types";
+import Customer from "../../../../entities/customer";
+import Invoice from "../../../../entities/Invoice";
+import { Page } from "../../../../services/customers/customers-service.types";
 import Pagination from "../Pagination";
 import MonthCell from "./MonthCell";
 import { Table, TableContainer, Td, Th, TrAlternate } from "./table.styles";
 
 export interface CustomersTableProps {
-  customersPage: Page<Customer> | null;
+  customersPage?: Page<Customer> | null;
   currentPage: number;
   pageSize: number;
   activeYear: string;
@@ -30,7 +30,7 @@ const hasInvoiceForMonth = (invoices: Invoice[], month: string, year: string): I
  };
 
 export default function CustomersTable ({ customersPage, currentPage, pageSize, setCurrentPage, activeYear }: CustomersTableProps ){
-  
+  console.log("CustomersTable", customersPage);
   return(   
           <TableContainer>
             <Table>

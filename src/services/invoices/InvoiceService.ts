@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FetchDashboardRequest } from "./invoice-service.types";
 
 export const InvoiceService = {
   uploadInvoice: async (file: File) => {
@@ -11,6 +12,13 @@ export const InvoiceService = {
       },
     });
 
+    return response.data;
+  },
+
+  fetchDashboard: async (request : FetchDashboardRequest) => {
+    const response = await axios.get(`http://localhost:3000/invoices/dashboard-summary`, {
+      params: request
+    });
     return response.data;
   },
 };

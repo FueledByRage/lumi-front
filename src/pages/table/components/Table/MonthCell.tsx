@@ -1,4 +1,4 @@
-import Invoice from "../../../entities/Invoice";
+import Invoice from "../../../../entities/Invoice";
 import { InvoiceIcon, MonthIconCell } from "./table.styles";
 
 export interface MonthCellProps {

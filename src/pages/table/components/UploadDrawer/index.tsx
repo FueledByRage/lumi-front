@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import Drawer from '../../../components/Drawer';
-import { InvoiceService } from '../../../services/invoices/InvoiceService';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Drawer from '../../../../components/Drawer';
+import { InvoiceService } from '../../../../services/invoices/InvoiceService';
 import {
   DrawerContainer,
   Title,
@@ -21,33 +22,38 @@ interface UploadDrawerProps {
 
 export default function UploadDrawer({ isOpen, onClose }: UploadDrawerProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  
+  const queryClient = useQueryClient();
+  
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (file: File) => InvoiceService.uploadInvoice(file),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['customers'] });
+      setSuccess(true);
+      setFile(null);
+      
+      setTimeout(() => {
+        if (success) onClose();
+      }, 2000);
+    },
+    onError: (error) => {
+      console.error('Error uploading file:', error);
+      setSuccess(false);
+    }
+  });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
     setFile(selectedFile);
     setSuccess(false);
-    setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-      await InvoiceService.uploadInvoice(file);
-      setSuccess(true);
-      setFile(null);
-    } catch (err) {
-      console.error(err);
-      setError("Erro ao enviar o arquivo.");
-    } finally {
-      setLoading(false);
-    }
+    
+    mutate(file);
   };
 
   return (
@@ -73,9 +79,9 @@ export default function UploadDrawer({ isOpen, onClose }: UploadDrawerProps) {
 
             <SubmitButton 
               type="submit" 
-              disabled={!file || loading}
+              disabled={!file || isPending}
             >
-              {loading ? 'Enviando...' : 'Enviar'}
+              {isPending ? 'Enviando...' : 'Enviar'}
             </SubmitButton>
           </ButtonGroup>
           
@@ -87,7 +93,7 @@ export default function UploadDrawer({ isOpen, onClose }: UploadDrawerProps) {
           
           {error && (
             <Message type="error">
-              {error}
+              {error instanceof Error ? error.message : "Erro ao enviar o arquivo."}
             </Message>
           )}
         </Form>
