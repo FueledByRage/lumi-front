@@ -18,7 +18,7 @@ export default function Filter({ onYearChange, activeYear }: FilterProps) {
       <span role="img" aria-label="filter">🔍</span> Distribuidoras
     </FilterButton>
     {[2018, 2019, 2020, 2021, 2022, 2023, 2024].map(year => (
-      <YearButton key={year} active={activeYear === year.toString()} onClick={() => onYearChange(year.toString())}>
+      <YearButton key={year} active={activeYear === year.toString()} onClick={() => {onYearChange(year.toString())}}>
         {year}
       </YearButton>
     ))}
