@@ -7,7 +7,7 @@ export const FloatButtonContainer = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #4285f4;
+  background-color: #043f23;
   color: white;
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -20,7 +20,7 @@ export const FloatButtonContainer = styled.button`
   
   &:hover {
     transform: scale(1.1);
-    background-color: #3367d6;
+    background-color: #043f23;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Filter from "./components/Filter";
-import { Page } from "../../services/customers/customers-service.types";
+import { Page } from "../../services/customers/CustomersService.types";
 import Customer from "../../entities/customer";
 import { CustomerService } from "../../services/customers/customers.service";
 import CustomersTable from "./components/Table";

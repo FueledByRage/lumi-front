@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Customer from "../../../../entities/customer";
 import Invoice from "../../../../entities/Invoice";
-import { Page } from "../../../../services/customers/customers-service.types";
+import { Page } from "../../../../services/customers/CustomersService.types";
 import Pagination from "../Pagination";
 import MonthCell from "./MonthCell";
 import { Table, TableContainer, Td, Th, TrAlternate } from "./table.styles";
