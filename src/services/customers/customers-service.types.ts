@@ -1,3 +1,7 @@
+export enum FilterEnum {
+  CONSUMERS = "consumers",
+  DISTRIBUTORS = "distributors"
+}
 export interface Page<T> {
   content: T[];
   page: string;
@@ -11,5 +15,7 @@ export interface Page<T> {
 export interface FetchCustomersRequest{
   page: number;
   pageSize: number;
+  query: string | null;
+  type: FilterEnum
   year: string;
 }

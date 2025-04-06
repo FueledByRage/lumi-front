@@ -14,7 +14,7 @@ export interface CustomersTableProps {
   setCurrentPage: (page: number) => void;
 }
 
-const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"];
+const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 const hasInvoiceForMonth = (invoices: Invoice[], month: string, year: string): Invoice | undefined => {
     return invoices.find(invoice => 
@@ -30,7 +30,6 @@ const hasInvoiceForMonth = (invoices: Invoice[], month: string, year: string): I
  };
 
 export default function CustomersTable ({ customersPage, currentPage, pageSize, setCurrentPage, activeYear }: CustomersTableProps ){
-  console.log("CustomersTable", customersPage);
   return(   
           <TableContainer>
             <Table>

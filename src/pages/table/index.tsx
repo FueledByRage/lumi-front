@@ -7,20 +7,24 @@ import { CustomerService } from "../../services/customers/customers.service";
 import CustomersTable from "./components/Table";
 import FloatButton from "../../components/FloatButton";
 import UploadDrawer from "./components/UploadDrawer";
+import { FilterEnum } from "./table.types";
 interface QueryOptions {
   page: number;
   pageSize: number;
   year: string;
+  query: string | null;
+  type: FilterEnum;
 }
-
 export default function CustomerTable() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
   const [queryOptions, setQueryOptions] = useState<QueryOptions>({
     page: 1,
     pageSize: 10,
-    year: "2024"
+    year: "2024",
+    query: null,
+    type: FilterEnum.DISTRIBUTORS,
   });
-  const [activeFilter, setActiveFilter] = useState<string>("distribuidoras");
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const setCurrentPage = (page: number) => {
     setQueryOptions(prev => ({ ...prev, page }));
@@ -30,8 +34,21 @@ export default function CustomerTable() {
     setQueryOptions(prev => ({ ...prev, year }));
   };
 
+  const setActiveQuery = (query: string) => {
+    setQueryOptions(prev => ({ ...prev, query }));
+  };
+
+  const setActiveFilter = (type: FilterEnum) => {
+    setQueryOptions(prev => ({ ...prev, type }));
+  };
+
+  const getQueryKey = ()=>{
+    const { page, pageSize, year, query, type } = queryOptions;
+    return ["customers", `page=${page}`, `pageSize=${pageSize}`, `year=${year}`, `query=${query}`, `type=${type}`];
+  }
+
   const { data, isLoading } = useQuery<Page<Customer>>({
-    queryKey: ["customers", queryOptions, activeFilter],
+    queryKey: getQueryKey(),
     queryFn: () => CustomerService.fetchCustomers(queryOptions).then(response => response),
   });
 
@@ -42,8 +59,10 @@ export default function CustomerTable() {
       <Filter 
         onYearChange={setActiveYear}
         activeYear={queryOptions.year}
-        selectedFilter={activeFilter}
+        selectedFilter={queryOptions.type}
         onFilterChange={setActiveFilter}
+        onQueryChange={setActiveQuery}
+        query={queryOptions.query}
       />
       
       <CustomersTable
@@ -58,6 +77,7 @@ export default function CustomerTable() {
       <UploadDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
+        queryKey={getQueryKey()}
       />
 
       <FloatButton
