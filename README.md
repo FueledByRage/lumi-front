@@ -1,54 +1,69 @@
-# React + TypeScript + Vite
+# 🌐 Frontend - Upload de Faturas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o front-end da aplicação de upload e gerenciamento de faturas de energia elétrica.
 
-Currently, two official plugins are available:
+A interface foi desenvolvida com foco em **usabilidade**, **responsividade** e **integração fluida** com a API backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🧰 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ⚛️ **React**
+- 💅 **Styled Components** – Estilização com CSS-in-JS
+- ⚡ **Vite** – Empacotador leve e rápido
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## 🔧 Configuração do Ambiente
+
+### 1. Instale as Dependências
+
+Este projeto utiliza o **Yarn** como gerenciador de pacotes:
+
+```bash
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> Se ainda não tiver o Yarn instalado, execute:  
+> `npm install -g yarn`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Configurar Variáveis de Ambiente
+
+Crie um arquivo `.env` com base no exemplo fornecido:
+
+```bash
+cp .env.sample .env
 ```
+
+Abra o arquivo `.env` e defina a URL da API backend:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+> Essa URL é usada para comunicação com a API que roda localmente na porta 3000.
+
+---
+
+### ▶️ 3. Rodar a Aplicação
+
+Com tudo configurado, rode o front-end com:
+
+```bash
+yarn dev
+```
+
+A aplicação estará disponível em [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🔗 Integração com o Backend
+
+Este front-end depende do backend da aplicação para funcionar corretamente.
+
+> Certifique-se de que a API esteja rodando em [http://localhost:3000](http://localhost:3000), conforme configurado no `.env`.
+
+---
+
