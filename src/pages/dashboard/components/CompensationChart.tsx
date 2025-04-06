@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGri
 export default function CompensationChart({ data }: { data: { month: string; value: number }[] }) {
   return (
     <>
-      <h2>Valor compensado por mês (R$)</h2>
+      <h2>Valor compensado por mês </h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <XAxis dataKey="month" />

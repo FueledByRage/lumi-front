@@ -91,7 +91,19 @@ export default function Dashboard() {
     queryFn: () => InvoiceService.fetchDashboard(getRequest(filters)),
   });
 
-  if (isLoading) return <p>Carregando dashboard...</p>;
+  const { data: chartsData, isLoading: chartsLoading } = useQuery({
+    queryKey: ["invoice-charts", filters.year],
+    queryFn: () => {
+      if (!customerId) {
+        throw new Error("Customer ID is required");
+      }
+
+      return InvoiceService.monthlyData(filters.year, Number(customerId))
+    },
+    enabled: !!filters.year,
+  })
+
+  if (isLoading || chartsLoading) return <p>Carregando dashboard...</p>;
 
   return (
     <Container>
@@ -147,10 +159,9 @@ export default function Dashboard() {
         value={`R$ ${data.compensatedValue.toFixed(2)}`}
       />
     </CardsWrapper>
-
-
-      <ConsumptionChart data={data.monthlyEnergy} />
-      <CompensationChart data={data.monthlyCompensation} />
+    
+    <ConsumptionChart data={chartsData.consumption} />
+    <CompensationChart data={chartsData.compensation} />
     </Container>
   );
 }

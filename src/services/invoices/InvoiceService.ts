@@ -21,4 +21,12 @@ export const InvoiceService = {
     });
     return response.data;
   },
+
+  monthlyData: async (year: string, customerId: number) => {
+    const response = await axios.get(`http://localhost:3000/invoices/monthly-data`, {
+      params: { year, customerId },
+    });
+
+    return response.data;
+  }
 };
