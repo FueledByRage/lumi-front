@@ -31,6 +31,10 @@ export const Td = styled.td`
 `;
 
 export const TrAlternate = styled.tr`
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
   &:nth-child(even) td {
     background-color: #f5f5f5;
   }

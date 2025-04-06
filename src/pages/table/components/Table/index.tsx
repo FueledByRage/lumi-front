@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Customer from "../../../../entities/customer";
 import Invoice from "../../../../entities/Invoice";
 import { Page } from "../../../../services/customers/customers-service.types";
@@ -29,8 +30,13 @@ const hasInvoiceForMonth = (invoices: Invoice[], month: string, year: string): I
     }
  };
 
-export default function CustomersTable ({ customersPage, currentPage, pageSize, setCurrentPage, activeYear }: CustomersTableProps ){
-  return(   
+ 
+ export default function CustomersTable ({ customersPage, currentPage, pageSize, setCurrentPage, activeYear }: CustomersTableProps ){
+   const navigate = useNavigate();
+   const handleCustomerClick = (customer: Customer) => {
+      navigate(`/dashboard/${customer.id}`);
+    }
+   return(   
           <TableContainer>
             <Table>
               <thead>
@@ -46,7 +52,7 @@ export default function CustomersTable ({ customersPage, currentPage, pageSize, 
               </thead>
               <tbody>
                 {customersPage?.content.map((customer) => (
-                  <TrAlternate key={customer.id}>
+                  <TrAlternate key={customer.id} onClick={() => handleCustomerClick(customer)}>
                     <Td>{customer.name || 'N/A'}</Td>
                     <Td>{customer.registrationNumber}</Td>
                     <Td>{customer.distributor}</Td>
