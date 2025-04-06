@@ -8,7 +8,7 @@ import CustomersTable from "./components/Table";
 import FloatButton from "../../components/FloatButton";
 import UploadDrawer from "./components/UploadDrawer";
 import { FilterEnum } from "./table.types";
-interface QueryOptions {
+export interface QueryOptions {
   page: number;
   pageSize: number;
   year: string;
@@ -42,13 +42,10 @@ export default function CustomerTable() {
     setQueryOptions(prev => ({ ...prev, type }));
   };
 
-  const getQueryKey = ()=>{
-    const { page, pageSize, year, query, type } = queryOptions;
-    return ["customers", `page=${page}`, `pageSize=${pageSize}`, `year=${year}`, `query=${query}`, `type=${type}`];
-  }
+  const queryKey = ['customers', queryOptions]
 
   const { data, isLoading } = useQuery<Page<Customer>>({
-    queryKey: getQueryKey(),
+    queryKey,
     queryFn: () => CustomerService.fetchCustomers(queryOptions).then(response => response),
   });
 
@@ -77,7 +74,7 @@ export default function CustomerTable() {
       <UploadDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        queryKey={getQueryKey()}
+        queryKey={queryKey}
       />
 
       <FloatButton

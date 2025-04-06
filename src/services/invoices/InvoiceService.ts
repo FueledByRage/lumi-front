@@ -22,11 +22,11 @@ export const InvoiceService = {
     return response.data;
   },
 
-  monthlyData: async (year: string, customerId: number) => {
+  monthlyData: async (customerId: number, year? : string | null) => {
     const response = await axios.get(`http://localhost:3000/invoices/monthly-data`, {
       params: { year, customerId },
     });
-
+    
     return response.data;
   }
 };

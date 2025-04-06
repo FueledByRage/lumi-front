@@ -18,9 +18,10 @@ import {
 interface UploadDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  queryKey: any;
 }
 
-export default function UploadDrawer({ isOpen, onClose }: UploadDrawerProps) {
+export default function UploadDrawer({ isOpen, onClose, queryKey }: UploadDrawerProps) {
   const [file, setFile] = useState<File | null>(null);
   const [success, setSuccess] = useState(false);
   
@@ -29,16 +30,13 @@ export default function UploadDrawer({ isOpen, onClose }: UploadDrawerProps) {
   const { mutate, isPending, error } = useMutation({
     mutationFn: (file: File) => InvoiceService.uploadInvoice(file),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customers'] });
+      queryClient.invalidateQueries({ queryKey });
       setSuccess(true);
+
       setFile(null);
-      
-      setTimeout(() => {
-        if (success) onClose();
-      }, 2000);
+      onClose();
     },
-    onError: (error) => {
-      console.error('Error uploading file:', error);
+    onError: () => {
       setSuccess(false);
     }
   });
